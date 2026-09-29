@@ -1,0 +1,11 @@
+STATE BANK OF INDIA - SAVINGS ACCOUNT STATEMENT
+Account Holder: Anand Verma | Account Number: A/c 309988219034
+Branch: Connaught Place, New Delhi | IFSC: SBIN0000691
+Opening Balance: Rs. 15,000.00
+
+Date        | Details                                                 | Debit (Rs) | Credit (Rs) | Balance (Rs)
+------------|---------------------------------------------------------|------------|-------------|-------------
+14/10/2026  | UPI/DR/529910482019/rahul.sharma@okhdfcbank/Transfer    | 7,000.00   | -           | 8,000.00
+
+Closing Balance: Rs. 8,000.00
+*** End of Statement ***

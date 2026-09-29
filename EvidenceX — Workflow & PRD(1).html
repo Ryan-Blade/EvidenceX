@@ -1,0 +1,661 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}</style><style>:root{color-scheme:light dark;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}}:root[data-theme="dark"]{color-scheme:dark;--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}:root[data-theme="light"]{color-scheme:light}@media print{:root,:root[data-theme="dark"]{color-scheme:light;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}}body{background:var(--md-bg);color:var(--md-text);max-width:720px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:10px;font:14px/1.55 -apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',sans-serif;overflow-wrap:break-word}body>:first-child{margin-top:0}h1,h2,h3,h4,h5,h6{margin:6px 0 0;line-height:1.25;font-weight:600;text-wrap:balance}h1{font-size:1.35em}h2{font-size:1.15em;color:var(--md-muted)}h3,h4,h5,h6{font-size:1em}p,ul,ol,blockquote,table,pre,hr{margin:0}strong{font-weight:600}a{color:var(--md-link);text-decoration:none}a:hover{text-decoration:underline}ul,ol{display:flex;flex-direction:column;gap:6px;padding-left:22px}ul{list-style:disc}ol{list-style:decimal}:is(li,td,th)>*+:is(p,ul,ol,blockquote){margin-top:6px}blockquote{display:flex;flex-direction:column;gap:10px;border-left:2px solid var(--md-rule);padding-left:10px;color:var(--md-muted)}:not(pre)>code{background:var(--md-fill);padding:1px 3px;border-radius:4px;font:.92em 'SF Mono',ui-monospace,Menlo,Consolas,monospace}a>code{background:none;color:inherit}pre{background:var(--md-fill);padding:10px 12px;border-radius:6px;overflow-x:auto;font:12px/1.5 'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-block:4px}pre code{background:none;padding:0;font:inherit}table{width:100%;border-collapse:separate;border-spacing:2px;font:inherit}th,td{padding:6px 8px;border-radius:3px;text-align:left;vertical-align:top}th{background:var(--md-fill-strong);font-weight:600}td{background:var(--md-fill)}:is(th,td) :not(pre)>code{background:transparent}hr{border:0;border-top:1px solid var(--md-rule-strong);margin-block:10px}img{max-width:100%;height:auto;border-radius:4px}</style>
+</head><body>
+<h1>EvidenceX — Product Requirements Document</h1>
+<p><strong>&quot;From Scattered Evidence to Structured Investigation.&quot;</strong></p>
+<p>Hackathon problem statement: <em>Organizing Evidence After an Online Fraud Incident.</em></p>
+<hr>
+<h2>1. Problem &amp; Vision</h2>
+<p>Victims and investigators end up with fraud evidence spread across screenshots, chats, bank alerts, emails, and URLs — no timeline, no way to spot contradictions, no way to prove where a &quot;fact&quot; came from. EvidenceX is an <strong>investigation-support tool</strong> that turns that mess into a structured, chronological, traceable incident record — without ever deciding guilt, fixing conflicts on the user's behalf, or inventing facts that aren't in the evidence.</p>
+<p><strong>Non-goals (explicit):</strong> no guilt determination, no auto-accusation, no fabricated evidence, no editing of originals, no auto-resolving conflicts, no replacing an investigator's judgment, <strong>and — stated as its own principle, not just a restatement of the above — no scam/fraud/authenticity verdict of any kind.</strong> EvidenceX is an <strong>analyzer</strong>, not a detector. It never outputs &quot;this is a scam&quot; or &quot;this document is forged.&quot; What it outputs is structured, sourced <strong>flags</strong>: missing details, structural inconsistencies, gaps against what an authentic instance of that evidence type normally contains, and contradictions across evidence — always for a human investigator to weigh, never a system-issued conclusion.</p>
+<p><strong>North-star differentiator:</strong> every fact on screen answers <em>&quot;where did this come from, and how confident are we?&quot;</em></p>
+<hr>
+<h2>2. Primary User &amp; Jobs-to-be-Done</h2>
+<p><strong>Persona:</strong> Cybercrime investigator / fraud analyst (also usable by a bank fraud-ops team or an individual documenting a case for police).</p>
+<p>Jobs:</p>
+<ol>
+<li>Dump all evidence for an incident in one place without losing anything.</li>
+<li>Get a first-pass structured read of &quot;what happened, in what order&quot; in minutes, not hours.</li>
+<li>Know which facts are solid, which are contradicted, and which are still missing — before writing a report.</li>
+<li>Produce a report that a senior officer / bank / court can trust because every claim is sourced.</li>
+</ol>
+<hr>
+<h2>3. End-to-End Workflow</h2>
+<pre class="mermaid">flowchart TD
+    A[Create Case] --&gt; B[Add Evidence:\nimages / PDFs / text / URL / manual txn]
+    B --&gt; C[Ingest &amp; Validate\nfile type, size, hash SHA-256]
+    C --&gt; D[OCR / Text Extraction]
+    D --&gt; E[Text Normalization]
+    E --&gt; F[AI Entity Extraction\nJSON schema, source-tagged]
+    F --&gt; G[Transaction Extraction]
+    G --&gt; H[Timestamp &amp; URL Extraction]
+    H --&gt; I[Structured Case Data Store]
+    I --&gt; J[Conflict Detection\ncross-evidence diff]
+    I --&gt; K[Missing-Info Checklist Scan]
+    I --&gt; L[Chronological Timeline Build]
+    J --&gt; M[Investigator Review Queue]
+    K --&gt; M
+    L --&gt; M
+    M --&gt; N[AI Incident Summary\nexec summary, sequence, financials]
+    N --&gt; O[Investigator Edits/Annotates\ndoes NOT alter raw evidence]
+    O --&gt; P[Final Report Generation\nPDF + JSON]
+    P --&gt; Q[Export / Share]
+</pre>
+<p><strong>Processing pipeline is strictly sequential per evidence item</strong> (upload → validate → hash → store original, immutable → OCR → normalize → extract → merge into case), and <strong>case-level analysis (timeline, conflicts, missing info, summary) re-runs incrementally</strong> every time new evidence lands, layer by layer, chronologically — never re-deriving facts from scratch in a way that could silently overwrite a prior source link.</p>
+<hr>
+<h2>4. Screens (Information Architecture)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Screen</th>
+<th>Core purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Landing</td>
+<td>Pitch + &quot;Load Demo Case&quot; + Login</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Login</td>
+<td>Demo login (single investigator account)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Dashboard</td>
+<td>Case list + aggregate stats (cases, evidence processed, conflicts, missing fields)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Create Case</td>
+<td>Title, incident type, description, date, investigator, priority</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Case Overview</td>
+<td>Status, counts, quick links into every sub-view</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Evidence Upload</td>
+<td>Drag-drop files, paste text, add URL, add manual transaction</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Evidence Analysis</td>
+<td>Per-file status: queued → OCR → extracting → done/failed</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Entities</td>
+<td>Table of persons/phones/emails/UPI/bank/accounts/txn IDs/URLs/handles/dates/locations</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Transactions</td>
+<td>Amount, date/time, sender, receiver, method, source, confidence</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Timeline</td>
+<td>Chronological visual feed, each node links to source evidence</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Conflicts</td>
+<td>Field, Value A/Source A vs Value B/Source B, review status</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Missing Information</td>
+<td>Field, importance, related evidence, suggested action</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Traceability</td>
+<td>Fact → source evidence → location in file → confidence, click-through to raw evidence</td>
+</tr>
+<tr>
+<td>14</td>
+<td>AI Summary</td>
+<td>Executive summary, sequence, financial roll-up, key entities, flags</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Final Report</td>
+<td>Compiled report preview, export PDF/JSON</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Settings</td>
+<td>Demo mode toggle, AI provider config, privacy/masking, retention</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>5. Functional Requirements by Pipeline Stage</h2>
+<h3>5.1 Ingestion</h3>
+<ul>
+<li>Accept: PNG/JPG/JPEG, PDF, TXT, CSV, pasted text, URL string, manual transaction form.</li>
+<li>Validate MIME type + extension match, enforce max size (e.g. 15 MB/file), sanitize filenames, block path traversal.</li>
+<li>Compute SHA-256 of the original file <strong>before</strong> any processing; store hash + immutable original; all downstream artifacts (OCR text, extracted JSON) reference the evidence ID, never replace it.</li>
+<li>Assign <code>EV-###</code> ID at ingestion time, independent of processing outcome.</li>
+</ul>
+<h3>5.2 OCR / Text Extraction</h3>
+<ul>
+<li>Run OCR on images/scanned PDFs; run direct text extraction on text-layer PDFs/TXT/CSV.</li>
+<li>Store raw OCR text + engine confidence per evidence item.</li>
+<li><strong>Failure mode:</strong> if OCR yields empty/low-confidence output, mark evidence <code>OCR extraction unavailable</code> — do not synthesize placeholder text.</li>
+</ul>
+<h3>5.3 AI Extraction (schema-locked, source-tagged)</h3>
+<p>Output strictly conforms to:</p>
+<pre><code class="language-json">{
+  &#34;persons&#34;: [], &#34;phone_numbers&#34;: [], &#34;emails&#34;: [], &#34;upi_ids&#34;: [],
+  &#34;bank_accounts&#34;: [], &#34;transaction_ids&#34;: [], &#34;transactions&#34;: [],
+  &#34;urls&#34;: [], &#34;dates&#34;: [], &#34;times&#34;: [], &#34;locations&#34;: [],
+  &#34;messages&#34;: [], &#34;other_entities&#34;: []
+}
+</code></pre>
+<p>Every item carries <code>value</code>, <code>source_evidence_id</code>, <code>confidence</code>, <code>evidence_reference</code> (e.g. line/region). Status per field is one of <strong>FOUND / INFERRED / MISSING / CONFLICTING</strong> — never silently promoted to a &quot;confirmed&quot; fact if it was inferred.</p>
+<p><strong>No-hallucination rule (hard constraint):</strong> the model is prompted to extract <em>only</em> what is explicitly present; anything not present returns <code>&quot;Not Found&quot;</code>; anything ambiguous returns <code>&quot;Uncertain&quot;</code>. This is enforced structurally (schema + explicit refusal instruction) and validated post-hoc by checking every extracted value appears as a substring/near-match in the source OCR text before it's accepted into the structured store — extractions that fail this check are downgraded to <code>Uncertain</code> rather than discarded silently, so the investigator can still see and verify them.</p>
+<h3>5.4 Transaction &amp; Timestamp Extraction</h3>
+<ul>
+<li>Parse amounts, currency, sender/receiver, method, transaction ID, and any timestamp co-located with the transaction mention.</li>
+<li>Normalize dates/times to a single canonical timezone for ordering, while preserving the original as-written string for traceability.</li>
+</ul>
+<h3>5.5 Timeline Generation</h3>
+<ul>
+<li>Merge all extracted timestamped events (messages, URL clicks, transactions, doc timestamps) into one chronological feed.</li>
+<li>Events with no extractable timestamp are listed in an &quot;unordered / needs manual placement&quot; bucket rather than guessed into a slot.</li>
+<li>Every node links back to its <code>EV-###</code>.</li>
+</ul>
+<h3>5.6 Conflict Detection</h3>
+<ul>
+<li>Compare same-field values across different evidence sources (e.g. transaction amount, sender name, phone number).</li>
+<li>Flag as conflict when two sourced values for the <em>same logical fact</em> differ beyond a tolerance (e.g. exact match required for IDs; small formatting differences like ₹5,000 vs Rs. 5000 are normalized before comparing, so only genuine discrepancies surface).</li>
+<li>Never auto-resolve; both values + both sources are shown side by side with a manual &quot;reviewed / not reviewed&quot; toggle for the investigator.</li>
+</ul>
+<h3>5.7 Missing-Information Detection</h3>
+<ul>
+<li>Configurable checklist (transaction ID, timestamp, amount, payment method, sender, recipient, contact number, URL, incident date, etc.).</li>
+<li>A field is &quot;missing&quot; only if it is absent from <em>every</em> piece of evidence in the case, not just the current one being viewed.</li>
+<li>Each missing item includes importance (HIGH/MEDIUM/LOW) and a suggested verification action (e.g. &quot;Request bank statement for txn confirmation&quot;).</li>
+</ul>
+<h3>5.8 Traceability</h3>
+<ul>
+<li>Any fact rendered anywhere in the UI is clickable and opens a side panel showing: fact, source evidence, extracted location, confidence, and a jump-to-original-evidence action.</li>
+<li>This is enforced as a shared UI component, not re-implemented per screen, so it can't be forgotten on a new page.</li>
+</ul>
+<h3>5.9 Privacy / Masking</h3>
+<ul>
+<li>Masking runs <strong>before storage of any display copy</strong> — not just at render time. The raw OCR/extracted text is retained internally for traceability and matching, but anything rendered in the UI, PDF, or JSON export passes through the masking layer first.</li>
+<li>Sensitive fields are not all treated the same — reveal risk differs by field type:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Field class</th>
+<th>Default display</th>
+<th>Reveal available?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phone, email, UPI ID, bank/account number</td>
+<td>Masked (<code>98******10</code>, <code>ni***@gmail.com</code>, <code>********8990</code>)</td>
+<td>Yes — authorized &quot;Reveal&quot; action, logged (who/when)</td>
+</tr>
+<tr>
+<td>Card numbers, full account numbers if pasted raw</td>
+<td>Masked, at most last 4 digits shown</td>
+<td>Yes — authorized reveal, logged</td>
+</tr>
+<tr>
+<td><strong>OTP / one-time codes</strong></td>
+<td>Fully redacted (<code>****</code>), always</td>
+<td><strong>No — never revealed, to anyone, at any authorization level.</strong> The one-time code has no investigative value once used or expired; only the <em>event</em> matters (&quot;OTP requested at 10:35,&quot; &quot;OTP shared with scammer at 10:42&quot;), which is what's preserved and shown, not the digits</td>
+</tr>
+<tr>
+<td>Passwords / PINs, if ever present in evidence text</td>
+<td>Fully redacted, always</td>
+<td>No — same as OTP</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Every reveal action is logged (who revealed what, when) even in the MVP — this is exactly the kind of control a real investigation tool needs to demonstrate.</li>
+<li>API keys and secrets never reach the frontend bundle or logs.</li>
+</ul>
+<h3>5.10 AI Summary &amp; Final Report</h3>
+<ul>
+<li>Summary sections: executive summary, incident sequence, financial summary, key entities, missing information, conflicts, observations — each observation still carries a source reference where possible.</li>
+<li>Report always ends with the fixed disclaimer: <em>&quot;The information presented is extracted from supplied evidence and requires investigator verification.&quot;</em></li>
+<li>Export as PDF (formatted report) and JSON (full structured case, for handoff to other tooling).</li>
+</ul>
+<h3>5.11 Search</h3>
+<ul>
+<li>Global search across name, phone, email, transaction ID, UPI ID, URL, evidence ID, case ID.</li>
+<li>Filters: date range, evidence type, conflict status, processing status.</li>
+</ul>
+<hr>
+<h2>6. Edge Cases &amp; Failure Handling</h2>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Required behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No AI API key configured</td>
+<td>Fall back to <strong>Demo Mode</strong>: deterministic mock extraction on bundled sample evidence, clearly labeled &quot;Demo Mode&quot; in the UI — app stays fully usable</td>
+</tr>
+<tr>
+<td>AI API call fails/times out mid-processing</td>
+<td>Evidence marked <code>processing_failed</code>, retry action available, case not blocked from viewing other evidence</td>
+</tr>
+<tr>
+<td>OCR returns nothing / garbage</td>
+<td>Show &quot;OCR extraction unavailable,&quot; never fabricate text</td>
+</tr>
+<tr>
+<td>Duplicate evidence upload (same hash)</td>
+<td>Detect via SHA-256, warn investigator, link to existing <code>EV-###</code> rather than creating a duplicate record</td>
+</tr>
+<tr>
+<td>Corrupted / wrong-extension file</td>
+<td>Reject at validation with a clear error, no partial ingestion</td>
+</tr>
+<tr>
+<td>Oversized file</td>
+<td>Reject with size-limit message before upload completes</td>
+</tr>
+<tr>
+<td>Two sources report same fact identically</td>
+<td>No conflict raised — this is corroboration, and can optionally be shown as &quot;confirmed by N sources&quot;</td>
+</tr>
+<tr>
+<td>Same fact, cosmetic formatting difference only</td>
+<td>Normalize before comparing (currency symbols, date formats, whitespace) so it isn't a false conflict</td>
+</tr>
+<tr>
+<td>Evidence with no timestamp at all</td>
+<td>Placed in &quot;unordered&quot; timeline bucket, not guessed into position</td>
+</tr>
+<tr>
+<td>Partially redacted/blurred screenshot</td>
+<td>Extraction proceeds on legible portions; unreadable fields marked <code>Not Found</code>, not inferred</td>
+</tr>
+<tr>
+<td>Investigator disagrees with an AI summary line</td>
+<td>Summary is annotatable/editable at the report stage, but the underlying extracted facts and their sources remain unchanged and re-visible</td>
+</tr>
+<tr>
+<td>Two conflicting values where one source is far more recent</td>
+<td>Both shown; no automatic recency-based resolution — recency is metadata, not a verdict</td>
+</tr>
+<tr>
+<td>Very large case (100+ evidence items)</td>
+<td>Timeline/entity views paginate or virtualize; processing queue is visible so the UI never appears frozen</td>
+</tr>
+<tr>
+<td>User tries to edit original evidence</td>
+<td>Not permitted anywhere in the UI — only annotations/notes are editable, originals are read-only post-hash</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>6.1 Sequence-Completeness Flags Against Known Fraud-Script Structures</h2>
+<p>Sits in the pipeline <strong>after Timeline Generation, before AI Summary</strong>. Its job is narrower than it may first sound: it answers <em>&quot;against commonly-seen scam-script structures, which expected steps have supporting evidence and which don't&quot;</em> — it is a <strong>completeness check against known structures</strong>, the same category of capability as Section 6.5, applied specifically to multi-stage scam narratives. It does not classify a case as fraud, and it does not declare an outcome; it flags gaps and, where evidence allows, reports what the evidence itself supports (e.g. a matching debit record) as a sourced fact, not a conclusion.</p>
+<p><strong>Why this needs two different matching mechanisms, not one vector DB:</strong></p>
+<ul>
+<li><strong>Transaction ↔ bank-statement reconciliation</strong> is structured data (amount, date, reference), matched via fuzzy structured join (amount tolerance + date-window + optional reference match) against records the extraction pipeline already produced — not a semantic-similarity problem, and forcing it into a vector DB would obscure <em>why</em> two records matched, which breaks traceability.</li>
+<li><strong>Scam-stage matching</strong> (e.g. &quot;asking for OTP,&quot; &quot;OTP shared,&quot; &quot;urgency/threat language&quot;) genuinely needs semantic matching, because scripts are phrased differently every time. This is where embeddings/a vector store are appropriate.</li>
+</ul>
+<p><strong>Mechanism:</strong></p>
+<ol>
+<li>Maintain a small library of known scam playbooks (OTP Phishing, Fake Bank Call, Investment Scam, Job Scam, etc.), each an ordered stage list: <code>Initial Contact → Pretext/Impersonation → Credential/OTP Request → Compliance (shared) or Refusal → Transaction Attempted → Transaction Completed → Follow-up Ask</code>.</li>
+<li>Each incoming message/evidence snippet is checked against every stage using two layers:
+<ul>
+<li><strong>Deterministic keyword/pattern rules</strong> — works even in Demo Mode with no AI key (e.g. &quot;share the OTP,&quot; &quot;verify your account,&quot; a bare 4–6 digit code sent by the victim).</li>
+<li><strong>Semantic similarity</strong> against a small set of exemplar phrasings per stage, for language that doesn't hit exact keywords.</li>
+</ul>
+</li>
+<li><strong>Transaction confirmation</strong> runs as the separate structured-reconciliation step described above, linking chat-mentioned amounts to actual statement debits.</li>
+<li><strong>Outcome classification is strictly evidence-gated, never inferred:</strong>
+<ul>
+<li>No compliance-stage evidence found → <em>&quot;Scam contact evidenced; no compliance evidence found.&quot;</em></li>
+<li>Compliance evidence present, no matching debit found → <em>&quot;Compliance evidenced; financial loss not confirmed in supplied evidence.&quot;</em></li>
+<li>Compliance evidence <strong>and</strong> a matching debit → <em>&quot;Financial loss confirmed — matches transaction record EV-###.&quot;</em></li>
+<li>A stage with no evidence is reported as <strong>&quot;No evidence found for this stage,&quot;</strong> never as proof the step didn't happen, and it also feeds the existing Missing Information list rather than being a separate silent gap.</li>
+</ul>
+</li>
+<li>Every stage carries a confidence score and full source traceability, identical to every other fact in the system.</li>
+</ol>
+<p><strong>New UI element — &quot;Fraud Pattern Match&quot; card</strong> (on Case Overview and in the Final Report): matched playbook name, a per-stage evidenced/not-evidenced bar, and the financial-outcome line, closing with the same disclaimer used elsewhere: <em>this is a pattern-match signal for investigator review, not a determination of fraud or completion.</em></p>
+<p><strong>Data model impact:</strong> add a <code>fraud_pattern_matches</code> table (case_id, playbook_name, stage, status [EVIDENCED/NOT_FOUND], source_evidence_id, confidence) and a <code>reconciliations</code> table (chat_transaction_ref, statement_evidence_id, match_confidence, match_basis) — both following the same <code>source_evidence_id</code> + <code>confidence</code> + <code>extraction_status</code> convention as the rest of the schema.</p>
+<p><strong>Edge cases specific to this stage:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Required behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Victim never shared OTP (refused)</td>
+<td>Compliance stage marked &quot;No evidence found&quot; — explicitly <em>not</em> labeled &quot;fraud failed,&quot; since refusal evidence and absence-of-evidence must stay distinguishable</td>
+</tr>
+<tr>
+<td>Bank statement shows a debit but no chat ever mentions an amount</td>
+<td>Reconciliation has nothing to link to; debit stands alone as an unlinked transaction, flagged for investigator attention rather than force-matched</td>
+</tr>
+<tr>
+<td>Multiple similarly-timed debits, one matches the scam narrative</td>
+<td>Reconciliation must show <em>all</em> candidate matches with their confidence, not silently pick the top one</td>
+</tr>
+<tr>
+<td>Message doesn't match any known playbook</td>
+<td>System shows &quot;No known pattern matched&quot; rather than forcing a best-fit label — avoids false-pattern bias</td>
+</tr>
+<tr>
+<td>Same evidence could plausibly fit two playbooks (e.g. OTP phishing vs fake bank call)</td>
+<td>Show both matches with their respective confidences; do not auto-pick one</td>
+</tr>
+</tbody>
+</table>
+<h2>6.2 System Intelligence Architecture: Case Context, Entity Resolution, Cross-Case Learning</h2>
+<p>The AI calls are stateless — there is no memory between API requests. &quot;Understanding a case&quot; is therefore something <strong>the backend builds and hands back to the model on every call</strong>, not something the model retains on its own. This is deliberately RAG-style context assembly, not fine-tuning: cheaper, hackathon-appropriate, and — critically — auditable, since every piece of context fed back in is itself a traceable fact.</p>
+<p><strong>a) Entity Resolution (case entity graph)</strong></p>
+<ul>
+<li>Extraction happens per-evidence-item, but the same person/number/handle often appears differently across sources (&quot;Rahul,&quot; &quot;the bank executive,&quot; &quot;+91 98xxx,&quot; &quot;unknown caller&quot;).</li>
+<li>A resolution step runs after each extraction: new mentions are matched against existing canonical entities in the case (via exact match on structured identifiers like phone/UPI/account, plus fuzzy/semantic match on names), and either merged into an existing entity as a new alias or created as a new canonical entity.</li>
+<li>Each canonical entity keeps a list of all raw mentions, each mention still pointing at its original <code>EV-###</code> — resolution never deletes or hides the raw mention, it just organizes them under one identity.</li>
+<li>This directly fixes a real bug class: without it, &quot;sender name missing&quot; could be wrongly flagged on evidence where the sender was already identified elsewhere in the case.</li>
+</ul>
+<p><strong>b) Case Context Object (how the system stays case-aware)</strong></p>
+<ul>
+<li>After every evidence item is processed, the backend updates a compact structured snapshot of &quot;what this case currently knows&quot;: canonical entities, confirmed timeline events, current scam-pattern stage hits, open conflicts, open missing-info items — all as <strong>retrieved facts with source IDs</strong>, never as the model's own prior free-text opinions.</li>
+<li>This snapshot is included in the prompt context for every subsequent extraction, conflict-check, stage-detection, and summary call <em>for that case only</em>. So evidence #5 is interpreted with knowledge of what evidence #1–4 already established (e.g. recognizing a repeated phone number as the same entity, or recognizing an OTP-sharing message as the compliance stage because the pretext stage was already confirmed earlier in the same case).</li>
+<li>Because the object is rebuilt per-case from that case's own evidence, two cases never bleed into each other unless the cross-case layer below is explicitly used — each case genuinely gets its own &quot;understanding,&quot; not a shared one.</li>
+<li>Since context is always sourced facts, a later call cannot hallucinate forward from an earlier hallucination — every element of the context is itself checkable against an <code>EV-###</code>.</li>
+</ul>
+<p><strong>c) Cross-Case Indicator Layer (opt-in, privacy-scoped)</strong></p>
+<ul>
+<li>A separate, minimal index storing only <strong>indicators</strong> already flagged in any case — phone numbers, UPI IDs, bank accounts, URLs/domains — never full case narratives or victim details.</li>
+<li>New cases are checked against this index for exact-match hits (&quot;this UPI ID appears in 2 other cases&quot;) and, using embeddings, for semantic similarity between the new case's scam messages and previously-seen scam-script exemplars.</li>
+<li>This is the one place a vector store earns its role in this system — matching scam <em>language</em> across cases, not matching case <em>content</em> or resolving <em>within</em> one case.</li>
+<li>Cross-case hits are surfaced as a signal (&quot;seen elsewhere in the system&quot;) with access to full details of the other case gated separately — this is a system that connects dots, not one that leaks one victim's case into another's view.</li>
+</ul>
+<p><strong>New edge cases from this architecture:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Required behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Two different real people happen to share a common first name in the same case</td>
+<td>Entity resolution must not merge on name alone — require a corroborating identifier (phone/UPI/account) or leave as separate entities with a &quot;possible match&quot; flag for investigator confirmation, never a silent auto-merge</td>
+</tr>
+<tr>
+<td>Case context snapshot grows very large (many evidence items)</td>
+<td>Summarize/compress the snapshot passed into each prompt (e.g. canonical entities + open items only, not the full raw text of every prior evidence item) to control cost and stay within context limits</td>
+</tr>
+<tr>
+<td>Cross-case indicator match on a very common value (e.g. a generic customer-care number)</td>
+<td>Require a minimum specificity/frequency threshold before surfacing a &quot;seen elsewhere&quot; signal, to avoid false pattern-matching on noise</td>
+</tr>
+<tr>
+<td>Investigator corrects an entity merge (splits two wrongly-merged entities)</td>
+<td>Correction is stored and respected for all future processing in that case; original mentions and sources remain untouched</td>
+</tr>
+</tbody>
+</table>
+<h2>6.3 Additional Hardening (from real-world gaps)</h2>
+<ul>
+<li><strong>Evidence authenticity vs. integrity:</strong> SHA-256 hashing proves a file wasn't altered <em>after</em> upload — it says nothing about tampering <em>before</em> upload (e.g. a doctored transfer-confirmation screenshot, a common real tactic). Add a lightweight authenticity-signal check (image metadata/EXIF inspection, basic visual-inconsistency heuristics) explicitly labeled as <strong>&quot;signal, not proof&quot;</strong> in the UI, never as a fraud/authenticity verdict.</li>
+<li><strong>Language scope, stated explicitly:</strong> Indian fraud chats are frequently Hinglish or regional-language, sometimes in Latin script. State the MVP's actual support boundary (e.g. English + basic Hindi transliteration) rather than silently failing or mis-extracting on unsupported text; unrecognized-language content is marked &quot;extraction limited,&quot; not dropped.</li>
+<li><strong>Chain-of-custody export:</strong> alongside the narrative PDF report, provide a separate, minimal <strong>hash manifest export</strong> (every evidence file, its SHA-256, upload timestamp) — the artifact that actually matters if the case is handed to law enforcement.</li>
+<li><strong>Cost/rate control:</strong> cache extraction results by evidence hash so a re-uploaded duplicate never triggers a re-processing API call; batch or queue processing for large cases rather than firing unbounded parallel calls.</li>
+</ul>
+<h2>6.4 Innovation: Scammer Signature Fingerprinting (&quot;Have We Seen This Before?&quot;)</h2>
+<p>This extends the Cross-Case Indicator Layer (6.2c) from &quot;did this exact phone number appear before&quot; into recognizing a scammer's <strong>operating pattern</strong>, even when the phone number, UPI ID, or wording is slightly different — the same real-world capability fraud units want: <em>&quot;this looks like the same operation we saw last month.&quot;</em></p>
+<p><strong>Important framing constraint, kept consistent with the rest of the product:</strong> the system never &quot;declares a scam.&quot; What it does is surface a <strong>high-confidence pattern-match alert</strong> for investigator review — attribution to the <em>same individual</em> is not claimed, since scam scripts/templates are frequently shared or resold across many different operators. The system matches <strong>operations/scripts</strong>, not identities.</p>
+<p><strong>What gets fingerprinted, once a case's kill-chain stages (Section 6.1) are detected:</strong></p>
+<ul>
+<li><strong>Exact indicators:</strong> phone numbers, UPI IDs, bank accounts, URLs/domains used in the scam.</li>
+<li><strong>Behavioral signature:</strong> an embedding generated from the <em>structure and phrasing</em> of the message sequence — stage order, pretext style, urgency-language patterns, template phrasing — the same vector mechanism already used for stage detection in 6.1, reused here at the whole-sequence level instead of per-message.</li>
+<li>Together these form a <strong>Scammer Operation Profile</strong>: a bundle of known indicators + a behavioral signature + a running count of how many cases have matched it, stored separately from any victim's case narrative (same privacy boundary as 6.2c).</li>
+</ul>
+<p><strong>Matching flow for new evidence:</strong></p>
+<ol>
+<li>As soon as a new case's evidence sequence produces a behavioral signature, it's compared against stored profiles via vector similarity, <strong>and</strong> its extracted indicators are checked for exact overlap.</li>
+<li><strong>Confidence is weighted higher when both layers agree</strong> (same UPI/phone <em>and</em> similar script) than when only one does (similar script, different number — likely a shared template, not necessarily the same actor).</li>
+<li>A match above threshold surfaces immediately as a <strong>&quot;Known Pattern Match&quot; alert</strong> on Case Overview: profile ID, number of prior cases matched, matched indicators, script-similarity score, and a direct link to review (not copy) the prior cases' pattern data — never their victim details.</li>
+<li>Alert wording is deliberately careful: <em>&quot;This case matches a known scam operation profile (seen in 4 prior cases) with 91% pattern confidence — review recommended.&quot;</em> Never <em>&quot;this is a scam&quot;</em> or <em>&quot;this is the same person.&quot;</em></li>
+</ol>
+<p><strong>Profile lifecycle &amp; safeguards (this is where most systems like this go wrong):</strong></p>
+<ul>
+<li>A profile is only created/updated from a case <strong>after an investigator has reviewed and confirmed</strong> the kill-chain findings for that case — this prevents a single bad extraction from poisoning the shared fingerprint database.</li>
+<li>Profiles accumulate confidence with more confirmed matches; a first-time signature is stored as &quot;unconfirmed/new&quot; and doesn't yet trigger alerts on its own.</li>
+<li>If two previously-separate profiles later turn out to share strong indicator overlap, they're flagged for investigator-approved merge — never auto-merged silently.</li>
+<li>A generic/very common script (e.g. a mass-market phishing template used by many unrelated actors) is expected to produce broad, lower-confidence matches — the profile record explicitly tracks match count and average confidence so a &quot;used by everyone&quot; template doesn't masquerade as a tight, specific match.</li>
+</ul>
+<p><strong>New edge cases:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Required behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Same script/template used by many unrelated scammers (a shared &quot;kit&quot;)</td>
+<td>Profile shows high case-count but should surface as &quot;common template pattern,&quot; not &quot;same operation,&quot; once case-count crosses a configurable breadth threshold</td>
+</tr>
+<tr>
+<td>Scammer slightly varies wording each time (evasion)</td>
+<td>Behavioral signature is similarity-based, not exact-match, so minor rewording still matches — but confidence scales with actual similarity, not a hard yes/no</td>
+</tr>
+<tr>
+<td>Two unrelated cases share one coincidental indicator (e.g. reused/recycled phone number, not fraud-related)</td>
+<td>Weighting requires behavioral similarity <em>and</em> indicator overlap to reach high confidence; indicator-only overlap alone stays flagged as low-confidence</td>
+</tr>
+<tr>
+<td>Investigator disputes a fingerprint match as wrong</td>
+<td>Match can be dismissed per-case with a reason; dismissed matches don't feed back into the profile's confidence</td>
+</tr>
+<tr>
+<td>New case's own kill-chain stages are incomplete (e.g. only 2 of 5 stages evidenced)</td>
+<td>Fingerprint is generated and matched against existing profiles, but flagged &quot;generated from partial sequence&quot; — lower confidence banner</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Data model addition:</strong> <code>scammer_profiles</code> (profile_id, behavioral_signature_vector, indicator_list, confirmed_case_count, avg_confidence, status [new/confirmed/common-template]) and <code>profile_matches</code> (case_id, profile_id, match_confidence, matched_basis [indicator/behavioral/both], investigator_reviewed boolean).</p>
+<h2>6.5 Core Engine: Structural Completeness &amp; Expected-Field Analysis (Analyzer, Not Detector)</h2>
+<p><strong>This is the correct center of the product, and it must stay the framing for everything else in this document:</strong> EvidenceX does not decide whether something is a scam. It reasons about <strong>what a genuine instance of a given evidence type normally contains</strong>, compares the supplied evidence against that expectation, and raises <strong>structured, chronological flags</strong> for whatever is missing or inconsistent. The investigator draws the conclusion; the system draws attention to gaps.</p>
+<p>This generalizes across two levels of evidence, both handled by the same underlying mechanism:</p>
+<p><strong>a) Single-document structural analysis</strong></p>
+<ul>
+<li>Maintain a library of <strong>expected-structure templates</strong> per evidence type — not rigid OCR templates, but a reasoning-guided checklist of what a genuine instance of that type typically includes. Examples:
+<ul>
+<li><em>Bank statement:</em> account holder name, IFSC/branch identifier, statement period, opening/closing balance, consistent running-balance arithmetic, transaction reference numbers, consistent narration formatting, bank letterhead/footer elements.</li>
+<li><em>UPI/payment screenshot:</em> transaction ID (UTR/RRN), timestamp, payer/payee VPA, status indicator, app-consistent UI layout.</li>
+<li><em>Email:</em> sender domain, header consistency, reply-chain structure where claimed.</li>
+<li><em>Chat/message screenshot:</em> consistent timestamp progression, consistent sender identity/UI element placement across the same claimed conversation thread.</li>
+</ul>
+</li>
+<li>For each uploaded item, the system checks which expected elements are <strong>present, missing, or structurally inconsistent</strong> (e.g. a running balance that doesn't arithmetically follow from the listed transactions; a UPI screenshot with no transaction ID at all) — every check produces a flag with a plain-language rationale, tied to the evidence ID, never a &quot;forged/genuine&quot; label.</li>
+</ul>
+<p><strong>b) Evidence-sequence (array) structural analysis</strong></p>
+<ul>
+<li>The same principle applied to a <em>set</em> of related evidence — e.g. the 5-screenshot scam sequence described earlier. Rather than matching against a &quot;scam playbook&quot; to infer intent, the system checks the sequence for <strong>structural completeness of the narrative being presented</strong>: is there a coherent step order, are there gaps where a claimed step (e.g. &quot;victim received confirmation SMS&quot;) has no corresponding evidence, are timestamps consistent with the claimed sequence.</li>
+<li>Output is the same kind of flag as the single-document case: <em>&quot;Step 3 of the sequence (payment confirmation) has no supporting evidence&quot;</em> or <em>&quot;Screenshots 2 and 4 show inconsistent timestamp formatting for the same claimed conversation.&quot;</em> This is presented as a gap in the evidence, not a statement about what did or didn't happen.</li>
+</ul>
+<p><strong>c) &quot;Thinking capability,&quot; precisely defined</strong></p>
+<ul>
+<li>This is where the system needs to go beyond fixed-schema extraction: the AI step is prompted to <em>reason</em> about a given evidence item using general domain knowledge of what that document/evidence type normally looks like, rather than only filling predefined fields. It should be able to notice something like <em>&quot;this bank statement's transaction narration format changes style halfway through the document&quot;</em> even if &quot;narration format consistency&quot; wasn't an explicitly hardcoded field to check.</li>
+<li>To keep this auditable rather than a black box: the reasoning step must output its <strong>specific observation + which expected element it relates to + a plain-language rationale</strong>, in the same source-tagged structure as every other fact in the system — free-form &quot;gut feeling&quot; flags without a stated basis are not acceptable output.</li>
+<li>This reasoning layer sits <em>alongside</em> the deterministic checklist in (a)/(b), not instead of it — deterministic checks catch the reliable, demo-safe cases (works in Demo Mode too, via a rule-based template checklist); the reasoning layer catches the subtler, type-specific inconsistencies that a fixed schema would miss.</li>
+</ul>
+<p><strong>Output surface:</strong> a new <strong>&quot;Structural Flags&quot;</strong> panel per evidence item and per evidence sequence, each flag showing: what's missing/inconsistent, why it's expected for that evidence type, confidence, and the evidence ID(s) involved. These flags feed into the existing Missing Information (5.7) and AI Summary views alongside the case-level missing-fact flags, clearly labeled as <strong>document/sequence-structure flags</strong> so they're never confused with case-fact flags.</p>
+<p><strong>Edge cases:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Required behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Evidence type doesn't match any known template (e.g. an uncommon regional bank's statement format)</td>
+<td>Fall back to general-reasoning mode only, flagged as &quot;no reference template for this format — limited structural check,&quot; rather than forcing a mismatch against the wrong template</td>
+</tr>
+<tr>
+<td>A genuine document simply uses an unusual but legitimate format (e.g. a small local bank's statement layout)</td>
+<td>Flags are worded as &quot;deviates from common format&quot; or &quot;element not found,&quot; never &quot;inconsistent with genuine documents,&quot; to avoid false implication</td>
+</tr>
+<tr>
+<td>Partial/cropped screenshot</td>
+<td>Missing elements outside the cropped region are flagged as &quot;not visible in supplied evidence,&quot; distinct from &quot;absent from the document&quot;</td>
+</tr>
+<tr>
+<td>Reasoning layer produces a flag with no clear basis</td>
+<td>Rejected before display — every flag requires a stated expected-element reference; unanchored observations are dropped, not shown as speculation</td>
+</tr>
+<tr>
+<td>Sequence has extra, unclaimed evidence beyond the narrative being checked</td>
+<td>Extra evidence is retained and shown, not treated as an error — the check only evaluates completeness of the <em>claimed</em> sequence, not whether more evidence exists</td>
+</tr>
+</tbody>
+</table>
+<h2>7. Non-Functional Requirements</h2>
+<ul>
+<li><strong>Reliability:</strong> a single failed extraction never crashes the case view; errors are isolated per evidence item.</li>
+<li><strong>Explainability:</strong> every AI-derived value shows confidence and provenance.</li>
+<li><strong>Security (MVP-scoped):</strong> file validation, size limits, filename sanitization, path-traversal protection, parameterized queries, env-based secrets, no keys in frontend, SHA-256 hashing of originals. Documented as MVP-level, not production-hardened (no encryption-at-rest, no RBAC beyond a single demo login, no audit-grade access logs).</li>
+<li><strong>Accessibility:</strong> keyboard-navigable, labeled controls, adequate contrast in the dark theme, responsive down to tablet width.</li>
+<li><strong>Performance target for demo:</strong> end-to-end (upload → summary) under ~30 seconds for the bundled demo case.</li>
+</ul>
+<hr>
+<h2>8. Data Model (core entities)</h2>
+<p><code>cases</code> → <code>evidence</code> → <code>evidence_text</code> (OCR/raw text) → <code>entities</code>, <code>transactions</code>, <code>timeline_events</code> (each FK to evidence) → <code>conflicts</code> (FK to two evidence/fact pairs) → <code>missing_information</code> (FK to case) → <code>reports</code> (FK to case, generated snapshot).</p>
+<p>Every child table carries <code>source_evidence_id</code>, <code>confidence</code>, and <code>extraction_status</code> (FOUND / INFERRED / MISSING / CONFLICTING) so traceability is a first-class column, not a UI afterthought.</p>
+<p>Added for the intelligence layer (Section 6.2):</p>
+<ul>
+<li><code>case_entities</code> (canonical entity per case) + <code>entity_mentions</code> (raw mentions, each FK to <code>source_evidence_id</code>, FK to <code>case_entities</code>) — the alias/resolution graph.</li>
+<li><code>case_context_snapshots</code> (case_id, version, compact JSON of current entities/timeline/open conflicts/open missing-info, updated after each evidence item) — what gets fed back into subsequent AI calls.</li>
+<li><code>cross_case_indicators</code> (indicator_value, indicator_type [phone/UPI/account/URL], case_id, source_evidence_id) — the minimal opt-in index behind the &quot;seen elsewhere in the system&quot; signal, deliberately excluding narrative/victim content.</li>
+</ul>
+<hr>
+<h2>9. Suggested Tech Stack</h2>
+<ul>
+<li><strong>Frontend:</strong> Next.js + React + TypeScript + Tailwind (dark, professional theme).</li>
+<li><strong>Backend:</strong> FastAPI (Python), SQLAlchemy ORM, PostgreSQL.</li>
+<li><strong>AI:</strong> provider-agnostic abstraction layer (Gemini/OpenAI interchangeable) + a Demo Mode extractor that mimics the same interface with deterministic mock output.</li>
+<li><strong>OCR:</strong> Tesseract (or cloud OCR fallback if configured).</li>
+<li><strong>PDF report:</strong> server-side PDF generation (e.g. WeasyPrint/ReportLab).</li>
+<li><strong>Storage:</strong> local disk for MVP, structured behind a storage interface so S3/GCS can be swapped in later.</li>
+</ul>
+<hr>
+<h2>10. Success Criteria</h2>
+<p>An evaluator can, without manually editing extracted data: create a case → upload evidence → watch it process → see extracted entities and transactions with sources → see a chronological timeline → see at least one flagged conflict and one missing field → read an AI summary → generate a sourced PDF/JSON report. Full flow demoable in <strong>3–5 minutes</strong> via a one-click &quot;Load Demo Case.&quot;</p>
+<hr>
+<h2>11. Demo Script (3–5 min)</h2>
+<ol>
+<li><strong>(0:00–0:30)</strong> Landing page → &quot;Load Demo Case.&quot;</li>
+<li><strong>(0:30–1:00)</strong> Dashboard shows the case already ingested: evidence count, entities, one conflict, one missing field.</li>
+<li><strong>(1:00–2:00)</strong> Open Case Overview → Evidence Analysis: show each item's OCR/extraction status; click one screenshot's extracted phone number → traceability panel opens showing source + confidence.</li>
+<li><strong>(2:00–2:45)</strong> Timeline view: walk through message received → URL clicked → ₹5,000 transaction → second payment request, each node sourced.</li>
+<li><strong>(2:45–3:30)</strong> Conflicts view: show the two differing transaction amounts side-by-side, sourced, unresolved by design. Missing Information view: show a flagged missing transaction ID with suggested action.</li>
+<li><strong>(3:30–4:15)</strong> AI Summary → Final Report → export PDF, scroll to the disclaimer line.</li>
+<li><strong>(4:15–5:00)</strong> Close on the differentiator: &quot;Every fact you just saw is one click from its original evidence — that's what makes this usable in an actual investigation.&quot;</li>
+</ol>
+
+
+<!--claude-mermaid-runtime-begin:3477-->
+<style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
+<script src="/_runtime/mermaid-11.16.1.min.js"></script>
+<script>(function(){
+var CFG={"palettes":{"light":{"surface":"#f4efe4","text":"#42392e","line":"#8a7f6d","border":"#7a6c52","bg":"#fffdf8"},"dark":{"surface":"#262b34","text":"#f2f3f5","line":"#a8adb8","border":"#9aa4b8","bg":"#1f232b"}}};
+if(typeof mermaid==='undefined')return;
+var pres=Array.prototype.slice.call(document.querySelectorAll('pre.mermaid')).filter(function(p){if(p.hasAttribute('data-claude-mermaid-claimed'))return false;p.setAttribute('data-claude-mermaid-claimed','1');return true;});
+if(!pres.length)return;
+var mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
+var root=document.documentElement;
+var items=pres.map(function(pre){
+var mount=document.createElement('div');mount.className='mermaid-diagram';
+return {pre:pre,mount:mount,src:pre.textContent||''};
+});
+var seq=0;
+var renderGen=0;
+var lastKey='';
+function pageBg(fallback){
+var els=[document.body,document.documentElement];
+for(var i=0;i<els.length;i++){
+var c=els[i]&&getComputedStyle(els[i]).backgroundColor;
+if(c&&c!=='transparent'&&c!=='rgba(0, 0, 0, 0)')return c;
+}
+return fallback;
+}
+function render(){
+var theme=root.getAttribute('data-theme');
+var dark=theme==='dark'||(!!(mq&&mq.matches)&&theme!=='light');
+var pal=dark?CFG.palettes.dark:CFG.palettes.light;
+var bg=pageBg(pal.bg);
+var key=(dark?'d':'l')+'|'+bg;
+if(key===lastKey)return;
+lastKey=key;
+var gen=++renderGen;
+var font=getComputedStyle(document.body).fontFamily||'sans-serif';
+var nat={useMaxWidth:false};
+mermaid.initialize({
+startOnLoad:false,securityLevel:'strict',theme:'base',
+flowchart:nat,sequence:nat,er:nat,state:nat,class:nat,pie:nat,
+gantt:nat,journey:nat,timeline:nat,gitGraph:nat,mindmap:nat,xyChart:nat,
+quadrantChart:nat,sankey:nat,c4:nat,requirement:nat,block:nat,
+packet:nat,kanban:nat,architecture:nat,radar:nat,
+themeVariables:{background:bg,mainBkg:pal.surface,primaryColor:pal.surface,
+primaryTextColor:pal.text,lineColor:pal.line,primaryBorderColor:pal.border,
+nodeBorder:pal.border,clusterBorder:pal.border,edgeLabelBackground:bg,
+clusterBkg:'rgba(127,127,127,0.07)',titleColor:pal.text,
+darkMode:dark,rowOdd:bg,rowEven:'rgba(127,127,127,0.07)',
+attributeBackgroundColorOdd:bg,attributeBackgroundColorEven:'rgba(127,127,127,0.07)',
+fontSize:'16px',fontFamily:font},
+themeCSS:'.node rect, .node circle, .node polygon, .node path, .cluster rect { stroke-width: 2px; }'
+});
+items.forEach(function(it){
+var id='claude-mermaid-'+seq++;
+mermaid.render(id,it.src).then(function(r){
+if(gen!==renderGen)return;
+var prev=it.pre.previousElementSibling;
+if(prev&&prev.className==='mermaid-diagram'&&prev!==it.mount)return;
+it.mount.innerHTML=r.svg;
+if(!it.mount.parentNode)it.pre.parentNode.insertBefore(it.mount,it.pre);
+it.pre.style.display='none';
+},function(){
+var scratch=document.getElementById(id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+scratch=document.getElementById('d'+id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+if(gen!==renderGen)return;
+if(it.mount.parentNode)it.mount.parentNode.removeChild(it.mount);
+it.pre.style.display='';
+});
+});
+}
+render();
+if(mq&&mq.addEventListener)mq.addEventListener('change',render);
+if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
+})();</script>
+<!--claude-mermaid-runtime-end-->
+</body></html>

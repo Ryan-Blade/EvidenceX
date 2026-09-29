@@ -1,0 +1,5 @@
+[WhatsApp Forensic Chat Export]
+14 Oct 2026, 10:30 AM - Suspect (+91 98765 43210): Dear Customer, I am Rahul Sharma, SBI Account Verification Executive. Your NetBanking KYC has expired and your account is scheduled for immediate suspension.
+14 Oct 2026, 10:35 AM - Suspect: Click https://secure-sbi-kyc-update.com/verify-pan to complete identity verification within 15 minutes.
+14 Oct 2026, 10:45 AM - Victim: I received an SMS alert stating Rs 5,000 was debited to rahul.sharma@okhdfcbank. Why was my account charged?
+14 Oct 2026, 11:00 AM - Suspect: System technical hold occurred during security verification. Please transfer an additional Rs 2,000 refundable security fee to unlock your funds.
